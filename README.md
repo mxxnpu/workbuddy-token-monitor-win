@@ -39,7 +39,7 @@ Windows 上开箱即用的 WorkBuddy 用量面板：一键装好、原生窗口�
 ### 方式二：源码运行
 
 ```bat
-git clone git@github.com:<your-name>/workbuddy-token-monitor-win.git
+git clone git@github.com:mxxnpu/workbuddy-token-monitor-win.git
 cd workbuddy-token-monitor-win
 run-win.bat
 ```
