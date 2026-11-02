@@ -27,8 +27,8 @@ set "PYEXE=%VENV%\Scripts\python.exe"
 set "PYWEXE=%VENV%\Scripts\pythonw.exe"
 set "TMPZIP=%TEMP%\wbtm-src.zip"
 set "TMPDIR=%TEMP%\wbtm-src"
-set "ZIPURL=https://codeload.github.com/The-garden-of-sinner/workbuddy-token-monitor/zip/refs/heads/main"
-set "ZIPURL2=https://github.com/The-garden-of-sinner/workbuddy-token-monitor/archive/refs/heads/main.zip"
+set "ZIPURL=https://codeload.github.com/mxxnpu/workbuddy-token-monitor-win/zip/refs/heads/main"
+set "ZIPURL2=https://github.com/mxxnpu/workbuddy-token-monitor-win/archive/refs/heads/main.zip"
 set "PATCH=%TEMP%\wbtm-fontpatch.py"
 set "WANT_SHORTCUT=1"
 set "WANT_RUN=1"
@@ -92,15 +92,19 @@ if errorlevel 1 powershell -NoProfile -Command "try { Invoke-WebRequest -Uri '%Z
 if not exist "%TMPZIP%" goto :dlfail
 for %%A in ("%TMPZIP%") do if %%~zA LSS 20000 goto :dlfail
 if exist "%TMPDIR%" rmdir /s /q "%TMPDIR%" >nul 2>&1
-where tar >nul 2>&1
-if errorlevel 1 goto :psunzip
-tar -xf "%TMPZIP%" -C "%TEMP%" >nul 2>&1
-if exist "%TEMP%\workbuddy-token-monitor-main" move "%TEMP%\workbuddy-token-monitor-main" "%TMPDIR%" >nul 2>&1
+rem use the system bsdtar, which understands zip; a bare "tar" from PATH
+rem may be GNU tar and would fail on a zip archive
+set "TAREXE="
+if exist "%SystemRoot%\System32\tar.exe" set "TAREXE=%SystemRoot%\System32\tar.exe"
+if not defined TAREXE goto :psunzip
+"%TAREXE%" -xf "%TMPZIP%" -C "%TEMP%" >nul 2>&1
+if not exist "%TEMP%\workbuddy-token-monitor-win-main" goto :psunzip
+move "%TEMP%\workbuddy-token-monitor-win-main" "%TMPDIR%" >nul 2>&1
 goto :srcdone
 
 :psunzip
 powershell -NoProfile -Command "try { Expand-Archive -LiteralPath '%TMPZIP%' -DestinationPath '%TMPDIR%' -Force } catch { exit 1 }"
-if exist "%TMPDIR%\workbuddy-token-monitor-main" set "TMPDIR=%TMPDIR%\workbuddy-token-monitor-main"
+if exist "%TMPDIR%\workbuddy-token-monitor-win-main" set "TMPDIR=%TMPDIR%\workbuddy-token-monitor-win-main"
 goto :srcdone
 
 :local
