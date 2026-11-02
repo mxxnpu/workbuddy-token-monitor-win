@@ -1,0 +1,28 @@
+WorkBuddy Token Monitor - Windows Edition
+==========================================
+
+本仓库是下列项目的衍生作品（Windows 适配版）：
+
+  项目名称 : workbuddy-token-monitor
+  仓库地址 : https://github.com/The-garden-of-sinner/workbuddy-token-monitor
+  基准版本 : v1.1.2 （提交 1de8f8e）
+  许可证   : MIT License
+  版权归属 : Copyright (c) 2026 The-garden-of-sinner
+
+原始 LICENSE 文件已原样保留，未做任何修改。
+
+本仓库相对上游的改动范围
+------------------------
+1. qt_app.py   : 字体族改为按可用性解析（新增 _font_family / _weight），
+                 解决 Windows 上回退到「宋体」导致笔画过细的问题；
+                 版本号标记为 1.1.2-win1。
+2. run-win.bat    : 新增，Windows 批处理启动器（替代 run.sh）。
+3. install-win.bat: 新增，单文件安装器（替代 build_deb.sh + install.sh）。
+4. README.md / README_windows.md: 新增 Windows 侧文档。
+5. 移除 Linux 专用脚本: build_deb.sh / release.sh / setup_token.sh /
+   install.sh / run.sh / stop.sh。
+
+数据采集（server.py）、Web 面板（web/）、演示数据与导出脚本均来自上游，
+未修改其逻辑与指标口径。
+
+本项目同样以 MIT 许可证发布。使用、修改、再分发请保留上述版权声明。
